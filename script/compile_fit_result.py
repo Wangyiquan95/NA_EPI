@@ -48,25 +48,21 @@ def read_fitness_data(filename, fit_dict, WTseq, lib_variants, strain):
     if check_mut_in_lib(mut, lib_variants) == 'no': continue
     if int(input_count) < 10: continue
     ID = WTseq if mut == 'WT' else Mut2ID(mut, WTseq, sorted(lib_variants.keys(), key= lambda x:int(x)))
-    fit_dict[strain][ID] = {'input_count': input_count, 'fit':fit}
+    fit_dict[strain][ID] = {'input_count': input_count, 'fit':fit, 'fit_R1':rep1_fit, 'fit_R2':rep2_fit}
   return fit_dict
   
 def write_output_file(outfile, fit_dict):
   print ("writing: %s" % outfile)
   outfile  = open(outfile, 'w')
   mut_list = fit_dict['HK68'].keys()
-  mut_list1 = fit_dict['HK68'].keys()
-  mut_list2 = fit_dict['HK19'].keys()
-  header   = "\t".join(['ID','HK68_ipt','Bk79_ipt','Bei89_ipt','Mos99_ipt','Vic11_ipt','HK19_ipt',
-                             'HK68_fit','Bk79_fit','Bei89_fit','Mos99_fit','Vic11_fit','HK19_fit'])
+  header   = "\t".join(['ID', 'strain', 'rep1_fit', 'rep2_fit', 'fit'])
   outfile.write(header+"\n")
-  for mut in mut_list2:
-    ipt_list = []
-    fit_list = []
-    for strain in ['HK68','Bk79','Bei89','Mos99','Vic11','HK19']:
-      ipt_list.append(fit_dict[strain][mut]['input_count'])
-      fit_list.append(fit_dict[strain][mut]['fit'])
-    outfile.write("\t".join([mut]+ipt_list+fit_list)+"\n")
+  for strain in ['HK68','Bk79','Bei89','Mos99','Vic11','HK19']:
+    for mut in mut_list:
+      fit = fit_dict[strain][mut]['fit']
+      R1fit = fit_dict[strain][mut]['fit_R1']
+      R2fit = fit_dict[strain][mut]['fit_R2']
+      outfile.write("\t".join([mut, strain, R1fit, R2fit, fit])+"\n")
   outfile.close()
   
 def main():
