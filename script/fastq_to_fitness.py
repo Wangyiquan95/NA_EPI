@@ -58,8 +58,8 @@ def Read2Mut2Count(R1_file, Count_dict, Sample, refpep):
   print ("Reading %s" % R1_file)
   R2_file = R1_file.replace('_R1_','_R2_')
   FPrimerlength = 30
-  RPrimerlength = 0
-  roilength    = 159
+  RPrimerlength = 30
+  roilength    = 129
   R1records = SeqIO.parse(R1_file,"fastq")
   R2records = SeqIO.parse(R2_file,"fastq")
   variants = [] 
@@ -135,7 +135,11 @@ def main():
   info_dict      = ReadingInfo(info_file)
   refseq_dict    = ReadingRefSeq(refseq_file)
   R1_files = glob.glob('fastq/*R1*.fastq')
+<<<<<<< HEAD:script/fastq_to_fitness.py
   print (R1_files)
+=======
+  print(R1_files)
+>>>>>>> baf50afde98f53bb4ba0cfac82552b2c41d4d70c:script/EpiB_fastq_to_fitness.py
   Count_dict  = {}
   for R1_file in R1_files: 
     ID = R1_file.rsplit('/')[1]
