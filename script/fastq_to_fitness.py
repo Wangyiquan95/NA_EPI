@@ -2,19 +2,17 @@
 import os
 import sys
 import glob
-import string
 import operator
 from Bio import SeqIO
-from itertools import imap
 from collections import Counter, defaultdict
 
 def hamming(str1, str2):
     assert len(str1) == len(str2)
-    return sum(imap(operator.ne, str1, str2))
+    return sum(map(operator.ne, str1, str2))
 
 def rc(seq):
   seq = str(seq)
-  complements = string.maketrans('acgtrymkbdhvACGTRYMKBDHV', 'tgcayrkmvhdbTGCAYRKMVHDB')
+  complements = str.maketrans('acgtrymkbdhvACGTRYMKBDHV', 'tgcayrkmvhdbTGCAYRKMVHDB')
   rcseq = seq.translate(complements)[::-1]
   return rcseq
 
@@ -57,7 +55,7 @@ def callsub(mutpep,refpep):
   else: return '-'.join(haplo)
 
 def Read2Mut2Count(R1_file, Count_dict, Sample, refpep):
-  print "Reading %s" % R1_file
+  print ("Reading %s" % R1_file)
   R2_file = R1_file.replace('_R1_','_R2_')
   FPrimerlength = 30
   RPrimerlength = 0
@@ -65,8 +63,11 @@ def Read2Mut2Count(R1_file, Count_dict, Sample, refpep):
   R1records = SeqIO.parse(R1_file,"fastq")
   R2records = SeqIO.parse(R2_file,"fastq")
   variants = [] 
+  read_count = 0
   for R1record in R1records:
-    R2record  = R2records.next()
+    read_count += 1
+    #if read_count == 100: break
+    R2record  = next(R2records)
     R1seq  = R1record.seq
     R2seq  = R2record.seq
     R1roi = R1seq[FPrimerlength:FPrimerlength+roilength]
@@ -81,17 +82,17 @@ def Read2Mut2Count(R1_file, Count_dict, Sample, refpep):
 
 def Output(Count_dict, outfile_prefix, info_dict):
   Samples = list(set([Sample.rsplit('-')[0] for Sample in Count_dict.keys()]))
-  Muts    = list(set([mut for Sample in Count_dict.keys() for mut in Count_dict[Sample].keys()]))
   for Sample in Samples:
     Sample_outfile = outfile_prefix+'_'+Sample+'.tsv'
-    print "Compiling results into files with prefix: %s" % Sample_outfile
+    print ("Compiling results into files with prefix: %s" % Sample_outfile)
     outfile = open(Sample_outfile,'w')
     outfile.write("\t".join(map(str,['Mut','Sample','InputCount','Rep1Count','Rep2count',
                                      'Mut_Rep1Fitness','Mut_Rep2Fitness','Fitness']))+"\n")
+    DNASample  = Sample+'-'+'DNA'
+    Rep1Sample = Sample+'-'+'R1'
+    Rep2Sample = Sample+'-'+'R2'
+    Muts    = list(set([mut for lib in Count_dict.keys() for mut in Count_dict[lib].keys() if Sample in lib]))
     for Mut in Muts:
-      DNASample  = Sample+'-'+'DNA'
-      Rep1Sample = Sample+'-'+'R1'
-      Rep2Sample = Sample+'-'+'R2'
       inputcount = Count_dict[DNASample][Mut]
       Rep1count  = Count_dict[Rep1Sample][Mut]
       Rep2count  = Count_dict[Rep2Sample][Mut]
@@ -133,8 +134,8 @@ def main():
   outfile_prefix = 'result/NA_Epi'
   info_dict      = ReadingInfo(info_file)
   refseq_dict    = ReadingRefSeq(refseq_file)
-  R1_files = glob.glob('fastq/Mos99*R1*.fastq')
-  print(R1_files)
+  R1_files = glob.glob('fastq/*R1*.fastq')
+  print (R1_files)
   Count_dict  = {}
   for R1_file in R1_files: 
     ID = R1_file.rsplit('/')[1]
