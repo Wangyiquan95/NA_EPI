@@ -3,6 +3,7 @@ import os
 import sys
 import glob
 from collections import defaultdict
+from Bio.SeqUtils.ProtParam import ProteinAnalysis as PA
 
 def Mut2ID(Mut, WTseq, residues):
   ID = ''
@@ -55,14 +56,16 @@ def write_output_file(outfile, fit_dict):
   print ("writing: %s" % outfile)
   outfile  = open(outfile, 'w')
   mut_list = fit_dict['HK68'].keys()
-  header   = "\t".join(['ID', 'strain', 'rep1_fit', 'rep2_fit', 'fit'])
+  header   = "\t".join(['ID', 'strain', 'pI', 'rep1_fit', 'rep2_fit', 'fit'])
   outfile.write(header+"\n")
   for strain in ['HK68','Bk79','Bei89','Mos99','Vic11','HK19']:
     for mut in mut_list:
+      protein_param = PA(mut)
+      pI = str(protein_param.isoelectric_point())
       fit = fit_dict[strain][mut]['fit']
       R1fit = fit_dict[strain][mut]['fit_R1']
       R2fit = fit_dict[strain][mut]['fit_R2']
-      outfile.write("\t".join([mut, strain, R1fit, R2fit, fit])+"\n")
+      outfile.write("\t".join([mut, strain, pI, R1fit, R2fit, fit])+"\n")
   outfile.close()
   
 def main():
