@@ -17,11 +17,11 @@ plot_pI_vs_fit <- function(table_data,strainname){
   colorscale <- c(brewer.pal(9,"Set1"))
   table_data <- filter(table_data,strain==strainname)
   print (strainname)
-  p <- ggplot(table_data,aes(x=charge,y=log10(fit),color=mut_type)) +
-	 geom_point(size=0.3) +
-         geom_smooth(method="loess", se=FALSE, fullrange=TRUE, level=0.95, color = 'black',size=0.6) +
+  p <- ggplot(table_data,aes(x=charge,y=log10(fit))) +
+	 geom_point(size=0.3, color='gray60', alpha=0.1) + 
+         geom_smooth(method="loess", se=FALSE, fullrange=FALSE, level=0.95, color=colorscale[2] ,size=0.6) +
          theme_cowplot(12) +
-         scale_color_manual(values=c('gray', colorscale)) +
+         #scale_fill_manual(values=c('gray', colorscale)) +
 	 theme(plot.title=element_text(size=textsize,face="bold",hjust = 0.5),
 	       axis.title=element_text(size=textsize,face="bold"),
 	       axis.text=element_text(size=textsize,face="bold"),
