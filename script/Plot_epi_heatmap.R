@@ -18,7 +18,7 @@ plot_heatmap <- function(epi_table,output){
   p  <- ggplot(epi_table, aes(x=mut1,y=mut2))+
           geom_point(aes(fill=EPI,size=abs(EPI)),color='black',pch=21) +
           scale_fill_gradientn(colours=c("blue", "white", "red"),
-                limits=c(-0.6,0.5),
+                limits=c(-0.9,0.8),
                 values=rescale(c(0,1)),
                 guide="colorbar",
                 na.value="black") +
@@ -37,7 +37,7 @@ plot_heatmap <- function(epi_table,output){
   }
 
 #change the l1 to 328 and add mut1 and mut2 columnn
-epi_table  <- read_csv('result/Bei_epi.csv')
+epi_table  <- read_csv('result/Bei89_epi.csv')
 epi_table <- epi_table %>%
   mutate(L1=recode(L1, `1` = '328',`2` = '329', `3` = '344',`4` = '367',`5` = '368',`6` = '369',`7` = '370'),
          L2=recode(L2, `1` = '328',`2` = '329', `3` = '344',`4` = '367',`5` = '368',`6` = '369',`7` = '370'))
@@ -51,5 +51,5 @@ mut_levels <- unique(c(epi_table$mut1,epi_table$mut2))
 epi_table  <- epi_table %>%
 		  mutate(mut1=factor(mut1,levels=mut_levels)) %>%
 		  mutate(mut2=factor(mut2,levels=mut_levels))
-plot_heatmap(epi_table,'graph/Bei89_heatmap.png')
+plot_heatmap(epi_table,'graph/Bei89_epi_heatmap.png')
 
