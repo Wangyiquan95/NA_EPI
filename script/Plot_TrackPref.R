@@ -31,4 +31,4 @@ p <-  ggplot(YearPrefTable, aes(x=Year,y=Meanfit,group=Background,color=Backgrou
               legend.text=element_text(size=textsize,face="bold"),
               legend.position='right') + 
         ylab(bquote(bold(Mean~Fitness)))
-ggsave('graph/FitsByYear2.png',p,height=1.8,width=4.5)
+ggsave('graph/FitsByYear.png',p,height=1.8,width=4.5)
