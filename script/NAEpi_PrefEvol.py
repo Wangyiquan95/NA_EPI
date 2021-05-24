@@ -8,6 +8,32 @@ from scipy import stats
 from math import log10, log, exp
 from collections import defaultdict, Counter
 
+def reading_data(filename):
+  fit_dict = defaultdict(dict)
+  infile = open(filename, 'r')
+  for line in infile.readlines():
+    if 'fit' in line: continue
+    line = line.rstrip().rsplit('\t')
+    ID     = line[0]
+    strain = line[1]
+    fit    = float(line[6])
+    fit_dict[strain][ID] = fit
+  infile.close()
+  return fit_dict
+
+def read_motif_byyear(motif_year):
+  motif_year_dic =defaultdict(dict)
+  infile = open(motif_year, 'r')
+  for line in infile.readlines():
+    if 'freq' in line: continue
+    line = line.strip().rsplit("\t")
+    year = line[0]
+    ID = line[1]
+    freq = line[2]
+    motif_year_dic[year][ID]=freq
+  infile.close()
+  return motif_year_dic
+
 def reading_pref_file(filename):
   pref_dict = defaultdict(dict)
   motif_id = []
@@ -100,18 +126,35 @@ def analyze_pref_evol(pref_dict, outfile, motifdict, yeardict):
       outfile.write("\t".join(map(str,[strain, year, np.mean(prefs), stats.sem(prefs)]))+"\n")
   outfile.close()
 
+def analyze_fit_evol(fit_dict, outfile, motifdict, motif_year_dict):
+  outfile = open(outfile,'w')
+  outfile.write("\t".join(['Background','Year','Meanfit','Stdfit'])+"\n")
+  for strain in fit_dict.keys():
+    print('Working on %s' % strain)
+    for year in sorted(map(int,motifdict.keys())):
+      motifs = motifdict[str(year)]
+      fits  = []
+      if year==1968: print(Counter(motifs),motif_year_dict['1968']['KNKSEDS'])
+      for motif in motifs:
+        if motif in fit_dict[strain].keys():
+          fit = log10(fit_dict[strain][motif])*float(motif_year_dict[str(year)][motif])
+          fits.append(fit)
+      outfile.write("\t".join(map(str,[strain, year, np.mean(fits), stats.sem(fits)]))+"\n")
+  outfile.close()
 def main():
-  filename  = "result/NA_pref.tsv"
+  filename  = "result/NA_compile_results.tsv"
   alnfile   = 'Fasta/Human_H3N2_NA_2020.aln'
   yearfile  = 'result/HumanN2_num_year.tsv'
   motiffile = 'result/Motif_ByYear.tsv'
-  outfile   = 'result/Prefs_ByYear.tsv'
+  outfile   = 'result/Fits_ByYear.tsv'
   residues   = [327,328,343,366,367,368,369] #actual residues should +1
-  pref_dict, motif_id = reading_pref_file(filename)
+  fit_dict = reading_data(filename)
+  motif_year_dic = read_motif_byyear(motiffile)
+  #pref_dict, motif_id = reading_pref_file(filename)
   motifdict = motifextracting(alnfile, residues)
   yeardict  = ConsensusbyYear(motifdict, yearfile)
-  writing_motiffile(motifdict, motiffile, motif_id)
-  analyze_pref_evol(pref_dict, outfile, motifdict, yeardict)
+  #writing_motiffile(motifdict, motiffile, motif_id)
+  analyze_fit_evol(fit_dict, outfile, motifdict, motif_year_dic)
     
 if __name__ == "__main__":
   main()
