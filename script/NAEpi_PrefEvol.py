@@ -69,7 +69,7 @@ def motifextracting(alnfile, residues):
     motifdict[year].append(motif)
   return motifdict
 
-def writing_motiffile(motifdict, motiffile, motif_id):
+def writing_motiffile(motifdict, motiffile, motif_id, lib_motifs):
   natural_motifs = list(set([motif for year in motifdict.keys() for motif in motifdict[year]]))
   natural_motifs = set(natural_motifs).intersection(set(motif_id))
   print("A total of %i out of 864 motifs observed in naturally circulating strains " % len(natural_motifs))
@@ -78,7 +78,7 @@ def writing_motiffile(motifdict, motiffile, motif_id):
   outfile.write("\t".join(['year', 'motif', 'freq'])+"\n")
   for year in sorted(motifdict.keys(), key=lambda x:int(x)):
     motifs = Counter(motifdict[year])
-    total_count = sum([int(motifs[motif]) for motif in motifs.keys()])
+    total_count = sum([int(motifs[motif]) for motif in motifs.keys() if motif in lib_motifs])
     for motif in natural_motifs:
       count = motifs[motif] if motif in motifs.keys() else 0
       freq = float(count)/float(total_count)
@@ -135,10 +135,11 @@ def main():
   outfile   = 'result/Fits_ByYear.tsv'
   residues   = [327,328,343,366,367,368,369] #actual residues should +1
   fit_dict = reading_data(filename)
+  lib_motifs = fit_dict['HK68'].keys()
   pref_dict, motif_id = reading_pref_file('result/NA_pref.tsv')
   motifdict = motifextracting(alnfile, residues)
   yeardict  = ConsensusbyYear(motifdict, yearfile)
-  writing_motiffile(motifdict, motiffile, motif_id)
+  writing_motiffile(motifdict, motiffile, motif_id, lib_motifs)
   analyze_fit_evol(fit_dict, outfile, motifdict)
     
 if __name__ == "__main__":

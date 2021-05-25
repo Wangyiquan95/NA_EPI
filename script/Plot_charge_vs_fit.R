@@ -18,7 +18,7 @@ plot_pI_vs_fit <- function(table_data,strainname){
   table_data <- filter(table_data,strain==strainname)
   print (strainname)
   p <- ggplot(table_data,aes(x=charge,y=log10(fit))) +
-	 geom_point(size=0.3, color='gray60', alpha=0.1) + 
+	 geom_point(size=0.3, color='gray70', alpha=0.1)+#,shape=20) + 
          geom_smooth(method="loess", se=FALSE, fullrange=FALSE, level=0.95, color=colorscale[2] ,size=0.6) +
          theme_cowplot(12) +
          #scale_fill_manual(values=c('gray', colorscale)) +
