@@ -51,7 +51,9 @@ plot_pairs <- function(table_fit_cast){
 		panel.grid.major = element_blank(),
                 legend.text=element_text(size=textsize,face="bold"),
 		axis.title=element_text(size=textsize,face="bold"),
-		axis.text=element_text(size=textsize,face="bold"))
+		axis.text=element_text(size=textsize,face="bold")) +
+      scale_x_continuous(n.breaks = 4) +
+      scale_y_continuous(n.breaks = 4)
   for(i in 1:p$nrow) {
     for(j in 1:p$ncol){
       p[i,j] <- p[i,j] + 
