@@ -27,13 +27,12 @@ plot_fit_sina <- function(table_fit, StrainLevels){
          scale_color_manual(values=c('gray', colorscale)) +
          theme(plot.title=element_text(size=textsize,face="bold"),
                panel.grid.major = element_blank(),
-               legend.position = "none", 
+               legend.position = "none",
                legend.text=element_text(size=textsize,face="bold"),
-               legend.key.size = unit(0.5,"line"), 
-               axis.title=element_text(size=textsize,face="bold"),
+               legend.key.size = unit(0.5,"line"),
+               axis.title=element_blank(),
                axis.text=element_text(size=textsize,face="bold")) +
-         coord_flip() +
-         ylab(bquote(bold("Fitness")))
+         coord_flip()
   ggsave('graph/Lib_fit_sina.png',p,width=2,height=3.5)
   }
 
@@ -48,10 +47,10 @@ plot_pairs <- function(table_fit_cast){
 		diag  = list(continuous ="blank")) +
           theme_cowplot(12) +
 	  theme(plot.title=element_text(size=textsize,face="bold"),
-		panel.grid.major = element_blank(),
-                legend.text=element_text(size=textsize,face="bold"),
-		axis.title=element_text(size=textsize,face="bold"),
-		axis.text=element_text(size=textsize,face="bold")) +
+            panel.grid.major = element_blank(),
+            legend.text=element_text(size=textsize,face="bold"),
+            axis.title=element_text(size=textsize,face="bold"),
+            axis.text=element_text(size=textsize,face="bold")) +
       scale_x_continuous(n.breaks = 4) +
       scale_y_continuous(n.breaks = 4)
   for(i in 1:p$nrow) {
@@ -61,7 +60,7 @@ plot_pairs <- function(table_fit_cast){
         scale_color_manual(values=c('gray', colorscale))
       }
     }
-  ggsave('graph/LibCorPairs.png',p,width=4,height=4)
+  ggsave('graph/LibCorPairs.png',p,width=4.4,height=4.4)
   }
 
 coloring <- function(ID){
@@ -92,3 +91,7 @@ table_fit_cast <- cast(table_fit,ID+mut_type~strain,value='fit') %>%
 print (cor(data.table(select(table_fit_cast, HK68, Bk79, Bei89, Mos99, Vic11, HK19))))
 plot_fit_sina(table_fit, StrainLevels)
 plot_pairs(table_fit_cast)
+
+#Calculate the mean fitness
+fit_sum <-  table_fit %>%
+  group_by(strain) %>% summarise(avg_fit=mean(fit))
