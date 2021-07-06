@@ -13,13 +13,19 @@ require(cowplot)
 
 plotaafreq <- function(aatable,poi,xlab,ylab){
   aalevels <- c('R','K','D','E','L','N','S','T','G')
+  chglevels <- c('+','-','neutral')
   postable    <- aatable %>%
-                   filter(grepl(poi,mut)) %>%
-                   mutate(aa=factor(aa,levels=aalevels))
+    filter(grepl(poi,mut)) %>%
+    #sum same charge frequence
+    group_by(year,charge) %>% summarise(freq = sum(freq))%>%
+    #mutate(aa=factor(aa,levels=aalevels)
+    mutate(charge=factor(charge,levels=chglevels))
   colorscale  <- c(brewer.pal(12,"Set3"))
   palette     <- c(colorscale[1],colorscale[3:12])
-  textsize    <- 9
-  p <- ggplot(postable,aes(year,freq,group=aa,color=aa)) +
+  textsize    <- 7
+
+  p <- ggplot(postable,aes(year,freq,group=charge,color=charge)) +
+    #ggplot(postable,aes(year,freq,group=aa,color=aa)) +
          geom_line() +
          scale_color_manual(values=palette,drop=FALSE) +
          theme_cowplot() +
@@ -31,15 +37,16 @@ plotaafreq <- function(aatable,poi,xlab,ylab){
                axis.title=element_text(size=textsize,face="bold")) +
          ylab(ylab) +
          xlab(xlab) +
-         scale_y_continuous(breaks=c(0,0.5,1),labels=c('0%','50%','100%')) +
+         scale_y_continuous(limits=c(0,1),breaks=c(0,0.5,1),labels=c('0%','50%','100%')) +
          scale_x_continuous(breaks=c(1968,1980,1990,2000,2010,2020),labels=c(1968,1980,1990,2000,2010,2020)) +
          guides(color=guide_legend(ncol=1))
   return (p)
   }
 
-aatable <- read_tsv('result/HumanN2Sweep_All.tsv') %>%
-             mutate(aa=mapply(function(s){return(str_sub(s,-1,-1))},mut)) %>%
-             mutate(mut=mapply(function(s){return(paste(str_sub(s,-1,-1),str_sub(s,2,-2),sep=''))},mut))
+aatable <- read_tsv('result/HumanN2Sweep_All2.tsv') %>%
+  mutate(aa=mapply(function(s){return(str_sub(s,-1,-1))},mut)) %>%
+  mutate(mut=mapply(function(s){return(paste(str_sub(s,-1,-1),str_sub(s,2,-2),sep=''))},mut)) %>%
+  mutate(charge=recode(aa,'K'="+",'R'="+",'D'="-",'E'="-",.default ="neutral"))
 p_328 <- plotaafreq(aatable,'328',NULL,'residue 328')
 p_329 <- plotaafreq(aatable,'329',NULL,'residue 329')
 p_344 <- plotaafreq(aatable,'344',NULL,'residue 344')
@@ -50,4 +57,13 @@ p_370 <- plotaafreq(aatable,'370',NULL,'residue 370')
 
 #p <- grid.arrange(p_190,p_145,p_227,nrow=3)
 p <- ggarrange(p_328,p_329,p_344,p_367,p_368,p_369,p_370,nrow=7,ncol=1,common.legend = TRUE,legend="right")
-ggsave('graph/NatMutFreq_roi.png',p,height=6.4,width=5)
+ggsave('graph/NatMutFreq_roi.png',p,height=5,width=3.4)
+
+#output the classified position year charge frequency table
+charge_table <- read_tsv('result/HumanN2Sweep_All2.tsv') %>%
+  mutate(aa=mapply(function(s){return(str_sub(s,-1,-1))},mut)) %>%
+  mutate(mut=mapply(function(s){return(paste(str_sub(s,-1,-1),str_sub(s,2,-2),sep=''))},mut)) %>%
+  mutate(charge=recode(aa,'K'="+",'R'="+",'D'="-",'E'="-",.default ="n")) %>%
+  group_by(pos,year,charge) %>% summarise(freq = sum(freq))%>%
+  mutate(charge=paste(pos, charge, sep= ""))
+write.csv(charge_table,'result/HumanH3N2_NA_classified.csv')
