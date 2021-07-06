@@ -14,12 +14,12 @@ require(cowplot)
 
 plot_pI_vs_fit <- function(table_data,strainname){
   textsize=7
-  colorscale <- c(brewer.pal(9,"Set1"))
+  colorscale <- c(brewer.pal(12,"Set3"))
   table_data <- filter(table_data,strain==strainname)
   print (strainname)
   p <- ggplot(table_data,aes(x=charge,y=log10(fit))) +
 	 geom_point(size=0.3, color='gray70', alpha=0.1)+#,shape=20) + 
-         geom_smooth(method="loess", se=FALSE, fullrange=FALSE, level=0.95, color=colorscale[2] ,size=0.6) +
+         geom_smooth(method="loess", se=FALSE, fullrange=FALSE, level=0.95, color=colorscale[1] ,size=0.6) +
          theme_cowplot(12) +
          #scale_fill_manual(values=c('gray', colorscale)) +
 	 theme(plot.title=element_text(size=textsize,face="bold",hjust = 0.5),
@@ -28,8 +28,8 @@ plot_pI_vs_fit <- function(table_data,strainname){
 	       legend.title=element_blank(),
 	       legend.text=element_text(size=textsize,face="bold"),
 	       legend.position='none') +
-	 xlab(bquote(bold('net charge'))) +
-	 ylab(expression(bold(log['10']~fit))) +
+	 xlab(bquote(bold('Net charge'))) +
+	 ylab('Fitness') +
          ggtitle(strainname)
   return (p)
   }
@@ -56,4 +56,5 @@ p4 <- plot_pI_vs_fit(table_data,'Mos99')
 p5 <- plot_pI_vs_fit(table_data,'Vic11')
 p6 <- plot_pI_vs_fit(table_data,'HK19')
 p <- grid.arrange(p1,p2,p3,p4,p5,p6,nrow=3,ncol=2)
-ggsave('graph/Compare_charge_vs_fit.png',p,height=6,width=4)
+ggsave('graph/Compare_charge_vs_fit_bK79.png',bg='white',p2,height=2,width=2)
+ggsave('graph/Compare_charge_vs_fit.png',bg='white',p,height=6,width=4)
