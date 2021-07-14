@@ -43,7 +43,7 @@ plotaafreq <- function(aatable,poi,xlab,ylab){
   return (p)
   }
 
-aatable <- read_tsv('result/HumanN2Sweep_All2.tsv') %>%
+aatable <- read_tsv('result/HumanN2Sweep_All2.tsv') %>% # aa level should be HumanN2Sweep_All.tsv
   mutate(aa=mapply(function(s){return(str_sub(s,-1,-1))},mut)) %>%
   mutate(mut=mapply(function(s){return(paste(str_sub(s,-1,-1),str_sub(s,2,-2),sep=''))},mut)) %>%
   mutate(charge=recode(aa,'K'="+",'R'="+",'D'="-",'E'="-",.default ="neutral"))
