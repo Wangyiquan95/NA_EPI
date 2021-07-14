@@ -85,7 +85,7 @@ This study aims to understand how epistasis influence NA antigenic evolution and
       - [./Fasta/Human_H3N2_HA_2020.aln](./Fasta/Human_H3N2_HA_2020.aln)
     - Output files:
       - [./result/HumanH3N2_mutation_year.tsv](./result/HumanH3N2_mutation_year.tsv)
-4 [./script/Coevolution_analysis_NA.ipynb](./script/Coevolution_analysis_NA.ipynb): Analyze NA antigenic region charge state coevolution
+4. [./script/Coevolution_analysis_NA.ipynb](./script/Coevolution_analysis_NA.ipynb): Analyze NA antigenic region charge state coevolution
     - Input files:
       - [./result/HumanH3N2_NA_classified.csv](./result/HumanH3N2_NA_classified.csv)
     - Output files:
