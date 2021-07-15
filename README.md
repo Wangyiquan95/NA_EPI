@@ -37,15 +37,7 @@ This study aims to understand how epistasis influence NA antigenic evolution and
       - result/NA_Epi_*.tsv
     - Output files:
       - [./result/NA_compile_results.tsv](./result/NA_compile_results.tsv)
-3. [./script/complie_fit_result.py](./script/compile_fit_result.py): Complie variants info(amino acid;charge;fitness) in six different genetic background
-    - Input files:
-      - [./data/lib_variants.tsv](./data/lib_variants.tsv)
-      - [./Fasta/N2.fa](./Fasta/N2.fa)
-      - [./data/WTseq.tsv](./data/WTseq.tsv)
-      - result/NA_Epi_*.tsv
-    - Output files:
-      - [./result/NA_compile_results.tsv](./result/NA_compile_results.tsv)
-4. [./script/NAEpi_PrefEvol.py](./script/NAEpi_PrefEvol.py): Amino acid sequences of NA antigenic region of interest in naturally occurring strains were extracted
+3. [./script/NAEpi_PrefEvol.py](./script/NAEpi_PrefEvol.py): Amino acid sequences of NA antigenic region of interest in naturally occurring strains were extracted
     - Input files:
       - [./result/NA_compile_results.tsv](./result/NA_compile_results.tsv)
       - [./Fasta/Human_H3N2_NA_2020.aln](./Fasta/Human_H3N2_NA_2020.aln)
