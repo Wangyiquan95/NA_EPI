@@ -69,8 +69,7 @@ Comm_df <- function(df1, df2){
 textsize <- 7
 colorscale  <- c(brewer.pal(8,"Accent"))
 Bk79_table <- read_epi('result/Bk79_epi.csv')
-natural_epi  <- read_csv('result/Coevols.csv')%>%
-  filter(abs(Coevol_S) > 0.005)
+natural_epi  <- read_csv('result/Coevols_<5.csv')
 Coevol_table <- natural_epi %>% separate(pair, c("Charge state i","Charge state j"), sep = "/")
 write.csv(Coevol_table,'result/Coevol_table.csv')
 
@@ -112,4 +111,3 @@ cor(common_df3$Coevol_S,common_df3$EPI,method = "spearman")
 cor(common_df4$Coevol_S,common_df4$EPI,method = "spearman")
 cor(common_df5$Coevol_S,common_df5$EPI,method = "spearman")
 cor(common_df6$Coevol_S,common_df6$EPI,method = "spearman")
-cor.test(common_df6$Coevol_S,common_df6$EPI,method = "spearman")
