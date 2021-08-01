@@ -32,17 +32,17 @@ def motifextracting(alnfile, residues):
     seq   = str(record.seq)
     assert(isInt(year))
     motif = ''.join([seq[pos] for pos in residues])
-    motifdict[year].append(motif)
+    motifdict[year].append([motif, ID])
   return motifdict
 
 def write_charge(motifdict, chg_file):
   print ("writing: %s" % chg_file)
   outfile = open(chg_file, 'w')
-  outfile.write("\t".join(['year','avg_chg'])+"\n")
+  outfile.write("\t".join(['year','local_chg', 'ID'])+"\n")
   for year in sorted(motifdict.keys(), key=lambda x:int(x)):
-    for motif in motifdict[year]:
+    for motif, ID in motifdict[year]:
       chgs   = calculate_charge(motif)
-      outfile.write("\t".join(map(str,[year, chgs]))+"\n")
+      outfile.write("\t".join(map(str,[year, chgs, ID]))+"\n")
   outfile.close()
     
 def main():
