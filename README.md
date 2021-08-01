@@ -153,7 +153,7 @@ This study aims to understand how epistasis influence NA antigenic evolution and
       - [./graph/epi_charge.png](./graph/epi_charge.png)
 3. [./script/Plot_epi_vs_Coevol.R](./script/Plot_epi_vs_Coevol.R):plot relationship between coevolution score and pairwise epistasis (Fig. 5c and Supplementary Fig. 16)
     - Input files:
-      - [./result/Coevols.csv](./result/Coevols.csv)
+      - [./result/Coevols.csv](./result/Coevols_<5.csv)
       - result/*_epi.csv
     - Output files:
       - [./graph/compare_natural_epi_bk79.png](./graph/compare_natural_epi_bk79.png)
