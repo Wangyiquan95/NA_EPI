@@ -13,9 +13,9 @@ require(cowplot)
 plot_charge <- function(data_table, graphname){
   colorscale  <- c(brewer.pal(9,"Set1"))
   textsize <- 7
-  p <- ggplot(data=data_table,aes(x=year,y=avg_chg, color=avg_chg)) +
+  p <- ggplot(data=data_table,aes(x=year,y=local_chg, color=local_chg)) +
          geom_point(size=0.1, alpha=0.1, shape=20,position='jitter') +
-         #geom_ribbon(aes(ymax=avg_chg+SD, ymin=avg_chg-SD),colour = NA) +
+         #geom_ribbon(aes(ymax=local_chg+SD, ymin=local_chg-SD),colour = NA) +
          #scale_color_manual(values=colorscale,drop=FALSE) +
          #scale_fill_manual(values=alpha(colorscale,0.5),drop=FALSE) +
 
