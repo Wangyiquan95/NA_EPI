@@ -62,7 +62,13 @@ ggsave('graph/hyperpar_r.png',bg='white',add,height=4.0,width=5)
 
 ###plot regularization vs prediction R2
 reg_r2_df <- read_csv('result/reg_r2.csv')
+add_model_reg_r2_df <-read_csv('result/add_only_model_reg_R2.csv')%>%
+  group_by(strain)%>%
+  mutate(strain=factor(strain,levels=StrainLevels))
 
+add_reg_r2 <- plot_corr(add_model_reg_r2_df,add_model_reg_r2_df$reg,add_model_reg_r2_df$R2_mean,add_model_reg_r2_df$strain,'Regularization',expression(bold('R'^2)))+
+  scale_x_log10()+geom_errorbar(aes(ymin=add_model_reg_r2_df$R2_mean-add_model_reg_r2_df$R2_std, ymax=add_model_reg_r2_df$R2_mean+add_model_reg_r2_df$R2_std), width=0)
+ggsave('graph/add_reg_r2.png',bg='white',add_reg_r2,height=2.0,width=5)
 reg_r2_df <- reg_r2_df %>%
   group_by(strain)%>%
   mutate(strain=factor(strain,levels=StrainLevels))
