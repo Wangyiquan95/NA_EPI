@@ -57,7 +57,7 @@ This study aims to understand how epistasis influence NA antigenic evolution and
       - [./result/NA_compile_results.tsv](./result/NA_compile_results.tsv)
     - Output files:
       - [./result/reg_r2.csv](./result/reg_r2.csv)
-3. [./script/Distance_CA.py](./script/Distance_CA.py): Calculate C alpha-alpha Distance within NA antigenic region
+3. [./script/Distance_CA.py](./script/Distance_sidechain.py): Calculate C alpha-alpha Distance within NA antigenic region
     - Output files:
       - [./result/CA_distance.tsv](./result/CA_distance.tsv)
 ### Natural strains evolution analysis 
