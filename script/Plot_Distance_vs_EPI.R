@@ -42,7 +42,7 @@ PlotCor <- function (common_df,title){
             legend.text=element_text(size=textsize,face="bold"),
             legend.position='none') +
       ggtitle(title)+
-      xlab(bquote(bold('Cα-Cα distance'))) +
+      xlab(bquote(bold('Side-chain -- side-chain distance'))) +
       ylab(bquote(bold('Pairwise epistasis')))
 	return(p1)
 }
@@ -78,13 +78,13 @@ plot_split <- function (cm_df){
   return(p)
 }
 #distance dataframe
-dst_df <- read_tsv('result/CA_distance.tsv')
+dst_df <- read_tsv('result/SC_COG_distance.tsv') #USING sidechain center of geometry(COG)
 dst_df$pair <- dst_df$pair %>%
-  str_replace_all('LYS`','')%>%
-  str_replace_all('ASN`','')%>%
-  str_replace_all('GLU`','')%>%
-  str_replace_all('SER`','')%>%
-  str_replace_all('PHE`','')%>%
+  # str_replace_all('LYS`','')%>%
+  # str_replace_all('ASN`','')%>%
+  # str_replace_all('GLU`','')%>%
+  # str_replace_all('SER`','')%>%
+  # str_replace_all('PHE`','')%>%
   str_replace_all('-','/')
 #epistasis dataframe
 HK68_table <- read_epi('result/HK68_epi.csv')
