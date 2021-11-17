@@ -159,19 +159,19 @@ def AccumMutOut(mutdict, mutlist, accfile):
 
 def main():
   #SeqFilter('Fasta/Human_H3N2_NA_2020.aln','result/Human_H3N2_NA_2020_complete.fa',469)
-  alnfile    = 'Fasta/Human_H3N2_NA_2020.aln'
-  outfile    = 'result/HumanN2Sweep_All.tsv'
-  accfile    = 'result/HumanN2HDist_All.tsv'
-  freqcutoff = 0.50
-  blastposoffset = 3
+  alnfile    = 'Fasta/Human_B_Yamagata_NA_2021.aln' # 'Fasta/Human_H1N1_NA_2008.aln' # 'Fasta/Human_H1N1pdm_NA_2021.aln' # 'Fasta/Human_H3N2_NA_2020.aln'
+  outfile    = 'result/B_yam_NASweep_All.tsv'
+  # accfile    = 'result/HumanN2HDist_All.tsv'
+  freqcutoff = 0
+  # blastposoffset = 3
   alnposoffset   = 0
-  refID          = 'EPI_ISL_3309|A/HongKong/16/68||NA|A_/_H3N2|1968_(Month_and_day_unknown)'
-  posmax     = 999
-  posmin     = 0
+  refID          = 'EPI_ISL_11429|B/Hong_Kong/8/1973||NA|B_/_H0N0|1973-01-01'
+  # posmax     = 999
+  # posmin     = 0
   mutdict    = ExtractAllSweep(alnfile,alnposoffset,refID)
   mutlist    = CleanMutList(mutdict,freqcutoff)
   CompileOut(mutdict,mutlist,outfile)
-  #AccumMutOut(mutdict, mutlist, accfile)
+  # AccumMutOut(mutdict, mutlist, accfile)
 
 if __name__ == "__main__":
   main()
