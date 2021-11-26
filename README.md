@@ -83,6 +83,12 @@ This study aims to understand how epistasis influence NA antigenic evolution and
     - Output files:
       - [./result/compare_peak.csv](./result/compare_peak.csv)
       - [./result/Coevols.csv](./result/Coevols.csv)
+### Construction of evolutionary trajectories based on the fitness data
+1. [./script/Evolution_model.py](./script/Evolution_model.py): Anlyze the evolutionary trajectory based on the fitness data
+    - Input files:
+      - [./result/NA_compile_results.tsv](./result/NA_compile_results.tsv)
+    - Output files:
+      - ./result/trajectory_prediction_*.tsv
 
 ## PLOT
 ### Natural evolution of an antigenic region in human H3N2 NA (Figure 1)
@@ -95,6 +101,7 @@ This study aims to understand how epistasis influence NA antigenic evolution and
     - Output files:
       - [./graph/NatMutFreq_roi.png](./graph/NatMutFreq_roi.png)
       - [./result/HumanH3N2_NA_classified.csv](./result/HumanH3N2_NA_classified.csv)
+
 ### Comparing the local fitness landscapes of the NA antigenic region (Figure 2)
 1. [./script/Plot_CompareLib.R](./script/Plot_CompareLib.R): plot fitness distribution and correlations of different background (Fig. 2a and b)
     - Input files:
@@ -110,6 +117,7 @@ This study aims to understand how epistasis influence NA antigenic evolution and
     - Output files:
       - [./graph/FitsByYear.png](./graph/FitsByYear.png)
 5. [./script/Plot_NA_titer.R](./script/Plot_NA_titer.R): plot virus rescue experiment of WT strains([Supplementary Fig. 4](./graph/NA_titer.png))
+
 ### Inference of additive fitness and pairwise epistasis (Figure 3)
 1. [./script/Plot_hyperpar_R2.R](./script/Plot_hyperpar_R2.R): plot evaluation of model hyperparameters using repeated k-fold cross-validation ([Supplementary Fig. 5](./graph/reg_r2.png)&(./graph/hyperpar_r.png))
 2. [./script/Plot_add_heatmap.R](./script/Plot_add_heatmap.R): plot parameters for additive fitness in different genetic backgrounds (Fig. 3a)
@@ -131,6 +139,7 @@ This study aims to understand how epistasis influence NA antigenic evolution and
       - [./graph/compare_ADD.png](./graph/compare_ADD.png)
       - [./graph/compare_EPI.png](./graph/compare_EPI.png)
       - [./graph/heatmap_epi_add_cor.png](./graph/heatmap_epi_add_cor.png)
+
 ### The importance of local net charge in the NA antigenic region (Figure 4)
 1. [./script/NA_epi_bind.pml](./script/NA_epi_bind.pml): plot the NA antigenic region interaction ([Fig. 4b](./graph/NA_epi_bind1.png) and [Supplementary Fig. 10](./graph/NA_epi_bind2.png))
 2. [./script/Plot_charge_vs_fit.R](./script/Plot_charge_vs_fit.R): Plot variant fitness with local net charge ([Fig. 4c](./graph/Compare_charge_vs_fit_bK79.png) and [Supplementary Fig. 12](./graph/Compare_charge_vs_fit.png))
@@ -140,6 +149,7 @@ This study aims to understand how epistasis influence NA antigenic evolution and
       - result/*_epi.csv
     - Output files:
       - [./graph/Distance_vs_epi.png](./graph/Distance_vs_epi.png)
+
 ### Predicting coevolution of charge states in the NA antigenic region using epistasis (Figure 5)
 1. [./script/plot_charge_natural_strain.R](./script/plot_charge_natural_strain.R): plot the evolution of local net charge at the NA antigenic region (Fig. 5a)
     - Input files:
