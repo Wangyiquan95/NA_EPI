@@ -1,5 +1,5 @@
-This README describes the scripts used for the sequence analysis in:   
-[Antigenic evolution of human influenza H3N2 neuraminidase is constrained by charge balancing](https://elifesciences.org/articles/72516)
+This README describes the scripts used for the sequence analysis in Wang et al. eLife 10:e72516 (2021):   
+[Antigenic evolution of human influenza H3N2 neuraminidase is constrained by charge balancing](https://elifesciences.org/articles/72516)   
 
 ## ANALYSIS FOR H3N2 NA ANTIGENIC region of interest by DEEP MUTATIONAL SCANNING
 This study aims to understand how epistasis influence NA antigenic evolution and characterize the underlying biophysical constraints. The repository here describes the analysis for the deep mutational scanning experiment that focuses on NA residues 328, 329, 344, 367, 368, 369, 370 in six different genetic backgrounds, namely A/Hong Kong/1/1968 (HK68), A/Bangkok/1/1979 (Bk79), A/Beijing/353/1989 (Bei89), A/Moscow/10/1999 (Mos99),A/Victoria/361/2011 (Vic11), and A/Hong Kong/2671/2019 (HK19). 
