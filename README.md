@@ -1,4 +1,4 @@
-This README describes the analysis in:   
+This README describes the analyses in:   
 [Wang et al. Antigenic evolution of human influenza H3N2 neuraminidase is constrained by charge balancing. eLife 10:e72516 (2021)](https://elifesciences.org/articles/72516)   
 
 ## ANALYSIS FOR H3N2 NA ANTIGENIC region of interest by DEEP MUTATIONAL SCANNING
